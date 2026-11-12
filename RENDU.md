@@ -31,27 +31,30 @@
 ## Exercice 4 — Déclaratif
 
 7. Quelle différence entre `kubectl create` et `kubectl apply` ?
-   >
+   > kubectl create est impératif : il crée l’objet et échoue s’il existe déjà. kubectl apply est déclaratif : il crée l’objet ou le met à jour pour qu’il corresponde au fichier YAML.
 8. À quoi sert le `selector` d'un Service ? Que se passe-t-il s'il ne correspond à aucun pod ?
-   >
+   > Le selector choisit, grâce aux labels (app: site), les pods vers lesquels le Service envoie le trafic. S’il ne correspond à aucun pod, le Service n’a aucun endpoint (kubectl get endpoints site est vide) et le site est inaccessible.
 
 ## Exercice 5 — Scaling & mises à jour
 
 9. Sur quels nœuds se trouvent vos 3 réplicas ? Collez la sortie de `kubectl get pods -l app=site -o wide`.
    ```
-
+NODE   READINESS GATES
+site-845b89d549-854d6   1/1     Running   0          5m51s   10.42.0.9   k3d-lab-agent-0    <none>           <none>
+site-845b89d549-dgfgt   1/1     Running   0          15s     10.42.1.5   k3d-lab-agent-1    <none>           <none>
+site-845b89d549-mc6mt   1/1     Running   0          15s     10.42.2.6   k3d-lab-server-0   <none> 
    ```
 10. Avec l'image `nginx:9.99`, quel statut avait le pod ? Quelle commande vous a donné la cause ?
-    >
+    > Le pod était en ErrImagePull, puis en ImagePullBackOff. La cause est donnée par kubectl describe pod -l app=site, section Events : l’image nginx:9.99 n’existe pas
 11. Pendant la panne, le site restait-il accessible ? Pourquoi ?
-    >
+    > Oui, le site restait accessible. Pendant un rolling update, les anciens pods ne sont supprimés que quand les nouveaux sont prêts.
 
 ## Exercice 6 — Portainer & Mario
 
 12. URL publique de votre Mario :
-    >
+    > https://laughing-guide-p4x974qw5x627v66-8585.app.github.dev/
 13. Retrouvez le Deployment `mario` en ligne de commande. Portainer et `kubectl` parlent-ils au même composant ? Lequel ?
-    >
+    > kubectl get deploy mario affiche bien le Deployment. Portainer et kubectl parlent au même composant : l’API Server du cluster sur k3d-lab-server-0.
 
 ## Bonus (facultatif)
 
