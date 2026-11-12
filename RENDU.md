@@ -10,7 +10,7 @@
 ## Exercice 1 — Cluster
 
 1. Combien de nœuds affiche `kubectl get nodes` ? Quel est le rôle de chacun ?
-   > 3 nœuds. k3d-lab-server-0 est le control plane (master) : il contient l’API Server, le scheduler et les contrôleurs. k3d-lab-agent-0 et k3d-lab-agent-1 sont les agents qui exécutent les pods.
+   > 3 nœuds. k3d-lab-server-0 est le control plane (master) : il contient l’API Server, le scheduler et les contrôleurs. k3d-lab-agent-0 et k3d-lab-agent-1 sont les agents qui exécutent les pods. un nœud k3d est un conteneur Docker dans lequel tourne k3s.
 2. Que montre `docker ps` ? Qu'est-ce qu'un « nœud » dans k3d, concrètement ?
    > docker ps montre un conteneur Docker par nœud (server-0, agent-0, agent-1), plus k3d-lab-serverlb, le load balancer qui publie le port 8081 et l’API.
 
